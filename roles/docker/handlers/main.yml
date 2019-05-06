@@ -1,0 +1,8 @@
+- name: Restart docker services
+  service:
+    name: docker
+    enabled: yes
+    state: restarted
+  listen: "Restart docker services"
+  become: true
+  become_user: root

@@ -1,0 +1,57 @@
+---
+
+- name: Create nexus User
+  user:
+    name: nexus
+  become: yes
+  become_user: root
+
+- name: Status file /home/nexus/nexus-3.16.1-02-unix.tar.gz
+  stat:
+    path:  "/home/nexus/nexus-3.16.1-02-unix.tar.gz"
+  register: nexus_status
+  become: yes
+  become_user: root
+
+- name: Download nexus-3.16.1-02-unix.tar.gz
+  get_url:
+    url: https://sonatype-download.global.ssl.fastly.net/repository/repositoryManager/3/nexus-3.16.1-02-unix.tar.gz
+    dest: /home/nexus/nexus-3.16.1-02-unix.tar.gz
+    mode: 0440
+  become: yes
+  become_user: nexus
+  when: not nexus_status.stat.exists
+
+- name: Extract nexus-3.16.1-02-unix.tar.gz into /home/nexus
+  unarchive:
+    src: /home/nexus/nexus-3.16.1-02-unix.tar.gz
+    dest: /home/nexus
+    remote_src: True
+  become: yes
+  become_user: nexus
+  when: not nexus_status.stat.exists
+
+- name: Generate Service Conf
+  template:
+    src: nexus.service.j2
+    dest: /etc/systemd/system/nexus.service
+    mode: 0744
+  become: yes
+  become_user: root
+
+- name: Start Nexus
+  service:
+    name: nexus
+    enabled: yes
+    state: started
+  become: yes
+  become_user: root
+
+- name: Generate NGinx Conf
+  template:
+    src: nexus.j2
+    dest: /etc/nginx/conf.d/nexus.conf
+    mode: 0744
+  become: yes
+  become_user: root
+  notify: Restart nginx services

@@ -1,0 +1,33 @@
+---
+
+- name: Add EPEL repository
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    gpgcheck: no
+  become: yes
+  become_user: root
+
+- name: Ensure Packages are installed
+  yum:
+    name: "{{ packages }}"
+    state: present
+    update_cache: True
+    validate_certs: false
+  vars:
+    packages:
+      - yum-utils
+      - nc
+      - net-tools
+      - logrotate
+      - git
+      - unzip
+  become: yes
+  become_user: root
+
+- name: Permanent Disable SELinux
+  selinux:
+    state: disabled
+  become: yes
+  become_user: root

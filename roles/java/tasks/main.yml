@@ -1,0 +1,13 @@
+---
+
+- name: Ensure Packages are installed
+  yum:
+    name: "{{ packages }}"
+    state: present
+    update_cache: True
+    validate_certs: false
+  vars:
+    packages:
+      - java-1.8.0-openjdk
+  become: yes
+  become_user: root

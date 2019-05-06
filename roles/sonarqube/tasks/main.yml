@@ -1,0 +1,66 @@
+---
+
+
+- name: Create sonar User
+  user:
+    name: sonar
+  become: yes
+  become_user: root
+
+- name: Status file /home/sonar/sonarqube-7.7.zip
+  stat:
+    path:  "/home/sonar/sonarqube-7.7.zip"
+  register: sonar_status
+  become: yes
+  become_user: root
+
+- name: Download sonar-3.16.1-02-unix.tar.gz
+  get_url:
+    url: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-7.7.zip
+    dest: /home/sonar/sonarqube-7.7.zip
+    mode: 0440
+  become: yes
+  become_user: sonar
+  when: not sonar_status.stat.exists
+
+- name: Extract sonarqube-7.7.zip into /home/sonar
+  unarchive:
+    src: /home/sonar/sonarqube-7.7.zip
+    dest: /home/sonar
+    remote_src: True
+  become: yes
+  become_user: sonar
+  when: not sonar_status.stat.exists
+
+- name: Generate Service Conf
+  template:
+    src: sonar.properties
+    dest: /home/sonar/sonarqube-7.7/conf/sonar.properties
+    mode: 0744
+  become: yes
+  become_user: root
+
+- name: Generate Service Conf
+  template:
+    src: sonar.service.j2
+    dest: /etc/systemd/system/sonar.service
+    mode: 0744
+  become: yes
+  become_user: root
+
+- name: Start sonar
+  service:
+    name: sonar
+    enabled: yes
+    state: started
+  become: yes
+  become_user: root
+
+- name: Generate NGinx Conf
+  template:
+    src: sonar.j2
+    dest: /etc/nginx/conf.d/sonar.conf
+    mode: 0744
+  become: yes
+  become_user: root
+  notify: Restart nginx services

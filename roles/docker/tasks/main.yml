@@ -1,0 +1,36 @@
+
+# LINT-ERROR
+- name: Add Docker Repo
+  command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  become: yes
+  become_user: root
+
+- name: Ensure a list of packages installed
+  yum:
+    name: "{{ packages }}"
+    state: present
+    update_cache: True
+    validate_certs: false
+  vars:
+    packages:
+      - docker-ce
+      - device-mapper-persistent-data
+      - lvm2
+  become: yes
+  become_user: root
+
+- name: Create Groupe Docker
+  group:
+    name: docker
+    state: present
+  become: yes
+  become_user: root
+
+- name: Start Docker Service
+  systemd:
+    name: docker
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+  become: yes
+  become_user: root

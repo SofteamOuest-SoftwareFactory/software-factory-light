@@ -1,0 +1,36 @@
+---
+
+- command: rpm -Uvh http://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6-3.noarch.rpm
+  become: yes
+  become_user: root
+
+- name: Ensure Packages are installed
+  yum:
+    name: "{{ packages }}"
+    state: present
+    update_cache: True
+    validate_certs: false
+  vars:
+    packages:
+      - postgresql96-server
+      - postgresql96
+  become: yes
+  become_user: root
+
+- find:
+    paths: /var/lib/pgsql/data/
+    patterns: "*.conf"
+  register: dir_files
+
+- command: postgresql-setup initdb
+  when: dir_files.matched|int != 0
+  become: yes
+  become_user: postgres
+
+- name: Start postgresql
+  service:
+    name: postgresql
+    enabled: yes
+    state: started
+  become: yes
+  become_user: root

@@ -1,0 +1,27 @@
+---
+
+- hosts: all
+  roles:
+    - { role: common,           tags: [common] }
+
+- hosts: jenkins-master
+  roles:
+    - { role: java,             tags: [java] }
+    - { role: jenkins,          tags: [jenkins] }
+
+- hosts: jenkins-slave
+  roles:
+    - { role: java,             tags: [java] }
+    - { role: docker,           tags: [docker] }
+
+- hosts: nexus
+  roles:
+    - { role: java,             tags: [java] }
+    - { role: docker,           tags: [docker] }
+    - { role: nexus,            tags: [nexus] }
+
+- hosts: sonarqube
+  roles:
+    - { role: java,             tags: [java] }
+    - { role: postgresql,       tags: [postgresql] }
+    - { role: sonarqube,        tags: [sonarqube] }

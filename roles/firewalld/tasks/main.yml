@@ -1,0 +1,19 @@
+---
+
+- firewalld:
+    service: https
+    permanent: yes
+    state: enabled
+    immediate: yes
+    zone: public
+  become: yes
+  become_user: root
+
+- firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+    immediate: yes
+    zone: public
+  become: yes
+  become_user: root

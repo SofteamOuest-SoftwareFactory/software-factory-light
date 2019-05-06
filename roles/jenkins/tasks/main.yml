@@ -1,0 +1,49 @@
+---
+
+- name: Create jenkins User
+  user:
+    name: jenkins
+  become: yes
+  become_user: root
+
+- name: Add Docker Repo
+  command: yum-config-manager --add-repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+  become: yes
+  become_user: root
+
+- name: Install Jenkins Key
+  rpm_key:
+    state: present
+    key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+  become: yes
+  become_user: root
+
+- name: Ensure Packages are installed
+  yum:
+    name: "{{ packages }}"
+    state: present
+    update_cache: True
+    validate_certs: false
+  vars:
+    packages:
+      - git
+      - jenkins
+  become: yes
+  become_user: root
+
+- name: Start Jenkins
+  service:
+    name: jenkins
+    enabled: yes
+    state: started
+  become: yes
+  become_user: root
+
+- name: Generate NGinx Conf
+  template:
+    src: nginx.j2
+    dest: /etc/nginx/conf.d/jenkins.conf
+    mode: 0744
+  become: yes
+  become_user: root
+  notify: Restart nginx services

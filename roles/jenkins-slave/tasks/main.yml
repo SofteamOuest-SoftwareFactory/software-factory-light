@@ -1,0 +1,9 @@
+---
+
+- name: Create jenkins User
+  user:
+    name: jenkins
+    groups:
+     - docker
+  become: yes
+  become_user: root
