@@ -7,6 +7,7 @@
 
 - hosts: jenkins-master
   roles:
+    - { role: certbot,          tags: [jenkins] }
     - { role: java,             tags: [jenkins] }
     - { role: jenkins,          tags: [jenkins] }
 
@@ -17,12 +18,14 @@
 
 - hosts: nexus
   roles:
+    - { role: certbot,          tags: [nexus] }
     - { role: java,             tags: [nexus] }
     - { role: docker,           tags: [nexus] }
     - { role: nexus,            tags: [nexus] }
 
 - hosts: sonarqube
   roles:
+    - { role: certbot,          tags: [sonarqube] }
     - { role: java,             tags: [sonarqube] }
     - { role: postgresql,       tags: [sonarqube] }
     - { role: sonarqube,        tags: [sonarqube] }

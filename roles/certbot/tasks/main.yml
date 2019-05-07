@@ -1,0 +1,5 @@
+- name: "Renew let's encrupt certificates"
+  cron:
+    name: "Renew let's encrupt certificates"
+    special_time: "daily"
+    job: "/usr/bin/certbot renew --quiet"

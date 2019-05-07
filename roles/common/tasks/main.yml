@@ -24,6 +24,8 @@
       - git
       - unzip
       - fail2ban
+      - postfix
+      - mailx
   become: yes
   become_user: root
 

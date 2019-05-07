@@ -8,10 +8,11 @@
   become: yes
   become_user: root
 
-- name: Add Docker Repo
+- name: Add Jenkins Repo
   command: yum-config-manager --add-repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
   become: yes
   become_user: root
+  changed_when: False
 
 - name: Install Jenkins Key
   rpm_key:

@@ -1,9 +1,9 @@
-
 # LINT-ERROR
 - name: Add Docker Repo
   command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
   become: yes
   become_user: root
+  changed_when: false
 
 - name: Ensure a list of packages installed
   yum:
