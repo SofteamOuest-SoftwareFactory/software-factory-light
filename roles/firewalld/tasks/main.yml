@@ -19,7 +19,7 @@
     zone: public
   become: yes
   become_user: root
-  
+
 - name: Disable HTTPS
   firewalld:
     service: http
@@ -50,3 +50,12 @@
   become: yes
   become_user: root
 
+- name: Disable 2375
+  firewalld:
+    port: 2375/tcp
+    permanent: yes
+    state: disabled
+    immediate: yes
+    zone: public
+  become: yes
+  become_user: root

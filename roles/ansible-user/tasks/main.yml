@@ -1,6 +1,6 @@
 - name: Update Password
   user:
-    name: jenkins
+    name: root
     password: "{{root.password | password_hash('sha512', 'mysecretsalt') }}"
     generate_ssh_key: true
   become: yes
