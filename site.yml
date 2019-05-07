@@ -7,22 +7,22 @@
 
 - hosts: jenkins-master
   roles:
-    - { role: java,             tags: [java] }
+    - { role: java,             tags: [jenkins] }
     - { role: jenkins,          tags: [jenkins] }
 
 - hosts: jenkins-slave
   roles:
-    - { role: java,             tags: [java] }
-    - { role: docker,           tags: [docker] }
+    - { role: java,             tags: [jenkins] }
+    - { role: docker,           tags: [jenkins] }
 
 - hosts: nexus
   roles:
-    - { role: java,             tags: [java] }
-    - { role: docker,           tags: [docker] }
+    - { role: java,             tags: [nexus] }
+    - { role: docker,           tags: [nexus] }
     - { role: nexus,            tags: [nexus] }
 
 - hosts: sonarqube
   roles:
-    - { role: java,             tags: [java] }
-    - { role: postgresql,       tags: [postgresql] }
+    - { role: java,             tags: [sonarqube] }
+    - { role: postgresql,       tags: [sonarqube] }
     - { role: sonarqube,        tags: [sonarqube] }

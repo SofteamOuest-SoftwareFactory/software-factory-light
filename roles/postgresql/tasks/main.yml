@@ -15,16 +15,26 @@
     packages:
       - postgresql96-server
       - postgresql96
+      - python-psycopg2
   become: yes
   become_user: root
 
 - find:
-    paths: /var/lib/pgsql/data/
+    paths: /var/lib/pgsql/9.6/data/
     patterns: "*.conf"
   register: dir_files
+  become: yes
+  become_user: root
 
-- command: postgresql-setup initdb
-  when: dir_files.matched|int != 0
+- command: /usr/pgsql-9.6/bin/postgresql96-setup initdb
+  when: dir_files.matched|int == 0
+  become: yes
+  become_user: root
+
+- name: Generate pg_hba.conf
+  template:
+    src: pg_hba.conf
+    dest: /var/lib/pgsql/9.6/data/pg_hba.conf
   become: yes
   become_user: postgres
 

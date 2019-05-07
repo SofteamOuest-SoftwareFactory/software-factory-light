@@ -56,6 +56,28 @@
   become: yes
   become_user: root
 
+- name: Create DB
+  postgresql_db:
+    name: sonar
+    login_host: 127.0.0.1
+    login_user: postgres
+    login_password: postgres
+    template: template0
+    encoding: UTF-8
+  become: yes
+  become_user: root
+
+- name: Create User
+  postgresql_user:
+    db: sonar
+    login_host: 127.0.0.1
+    login_user: postgres
+    login_password: postgres
+    name: sonar
+    password: sonar
+  become: yes
+  become_user: root
+
 - name: Start sonar
   service:
     name: sonar
