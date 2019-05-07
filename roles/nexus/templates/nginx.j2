@@ -1,0 +1,37 @@
+server {
+	listen 80;
+	listen [::]:80;
+
+	server_name usine-nexus.softeam.fr;
+
+	location / {
+		return 301 https://usine-nexus.softeam.fr$request_uri;
+	}
+}
+
+server {
+
+	listen 443 ssl;
+    server_name usine-nexus.softeam.fr;
+
+    ssl_certificate /etc/letsencrypt/live/usine-nexus.softeam.fr/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/usine-nexus.softeam.fr/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/usine-nexus.softeam.fr/chain.pem;
+
+	location / {
+
+	      proxy_set_header        Host $host:$server_port;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header        X-Forwarded-Proto $scheme;
+
+          # Fix the "It appears that your reverse proxy set up is broken" error.
+          proxy_read_timeout  90;
+
+          # Required for new HTTP-based CLI
+          proxy_http_version 1.1;
+          proxy_request_buffering off;
+          
+    	  proxy_pass http://127.0.0.1:8081;
+    }
+}

@@ -9,5 +9,6 @@
   vars:
     packages:
       - nginx
+      - certbot-nginx
   become: yes
   become_user: root

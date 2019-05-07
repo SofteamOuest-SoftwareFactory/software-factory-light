@@ -3,6 +3,7 @@
 - hosts: all
   roles:
     - { role: common,           tags: [common] }
+    - { role: ansible-user,     tags: [common] }
 
 - hosts: jenkins-master
   roles:

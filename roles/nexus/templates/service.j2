@@ -5,8 +5,8 @@ After=network.target
 [Service]
 Type=forking
 LimitNOFILE=65536
-ExecStart=/home/nexus/nexus-3.16.1-02/bin/nexus start
-ExecStop=/home/nexus/nexus-3.16.1-02/bin/nexus stop
+ExecStart=/home/nexus/nexus-current/bin/nexus start
+ExecStop=/home/nexus/nexus-current/bin/nexus stop
 User=nexus
 Restart=on-abort
 

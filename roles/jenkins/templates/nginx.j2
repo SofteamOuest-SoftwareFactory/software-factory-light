@@ -1,8 +1,22 @@
 server {
-
-	# listen 443 ssl;
 	listen 80;
-    server_name jenkins-master.usine.fr;
+	listen [::]:80;
+
+	server_name usine-jenkins.softeam.fr;
+
+	location / {
+		return 301 https://usine-jenkins.softeam.fr$request_uri;
+	}
+}
+
+server {
+
+	listen 443 ssl;
+    server_name usine-jenkins.softeam.fr;
+
+    ssl_certificate /etc/letsencrypt/live/usine-jenkins.softeam.fr/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/usine-jenkins.softeam.fr/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/usine-jenkins.softeam.fr/chain.pem;
 
 	location / {
 
@@ -17,7 +31,7 @@ server {
           # Required for new HTTP-based CLI
           proxy_http_version 1.1;
           proxy_request_buffering off;
-
+	
     	  proxy_pass http://127.0.0.1:8080;
     }
 }

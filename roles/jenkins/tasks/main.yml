@@ -3,6 +3,7 @@
 - name: Create jenkins User
   user:
     name: jenkins
+    password: "{{jenkins.password | password_hash('sha512', 'mysecretsalt') }}"
   become: yes
   become_user: root
 

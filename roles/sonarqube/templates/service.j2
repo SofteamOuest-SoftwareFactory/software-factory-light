@@ -5,8 +5,8 @@ After=network.target
 [Service]
 Type=forking
 LimitNOFILE=65536
-ExecStart=/home/sonar/sonarqube-7.7/bin/linux-x86-64/sonar.sh start
-ExecStop=/home/sonar/sonarqube-7.7/bin/linux-x86-64/sonar.sh stop
+ExecStart=/home/sonar/sonar-current/bin/linux-x86-64/sonar.sh start
+ExecStop=/home/sonar/sonar-current/bin/linux-x86-64/sonar.sh stop
 User=sonar
 Restart=on-abort
 

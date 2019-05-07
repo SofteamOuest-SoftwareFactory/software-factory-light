@@ -1,8 +1,22 @@
 server {
-
-	# listen 443 ssl;
 	listen 80;
-    server_name sonar.usine.fr;
+	listen [::]:80;
+
+	server_name usine-sonarqube.softeam.fr;
+
+	location / {
+		return 301 https://usine-sonarqube.softeam.fr$request_uri;
+	}
+}
+
+server {
+
+	listen 443 ssl;
+    server_name usine-sonarqube.softeam.fr;
+
+    ssl_certificate /etc/letsencrypt/live/usine-sonarqube.softeam.fr/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/usine-sonarqube.softeam.fr/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/usine-sonarqube.softeam.fr/chain.pem;
 
 	location / {
 

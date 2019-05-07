@@ -1,0 +1,30 @@
+- name: Create ansible User
+  user:
+    name: ansible
+    groups:
+      - wheel
+  become: yes
+  become_user: root
+
+- name: Ensure Folder exists
+  file:
+    path: /home/ansible/.ssh/
+    state: directory
+  become: yes
+  become_user: ansible
+
+- name: Copy Authorized Keys
+  copy:
+    content: "{{ authorized_keys }}"
+    dest: /home/ansible/.ssh/authorized_keys
+  when: authorized_keys is defined
+  become: yes
+  become_user: ansible
+
+- name: Generate Sudoer Conf
+  template:
+    src: sudoer
+    dest: /etc/sudoers.d/ansible
+    mode: 0744
+  become: yes
+  become_user: root
