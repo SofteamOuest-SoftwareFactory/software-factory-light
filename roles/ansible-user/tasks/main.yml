@@ -1,3 +1,11 @@
+- name: Update Password
+  user:
+    name: jenkins
+    password: "{{root.password | password_hash('sha512', 'mysecretsalt') }}"
+    generate_ssh_key: true
+  become: yes
+  become_user: root
+
 - name: Create ansible User
   user:
     name: ansible

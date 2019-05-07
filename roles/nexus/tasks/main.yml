@@ -4,6 +4,8 @@
   user:
     name: nexus
     password: "{{nexus.password | password_hash('sha512', 'mysecretsalt')}}"
+    groups:
+      - docker
   become: yes
   become_user: root
 

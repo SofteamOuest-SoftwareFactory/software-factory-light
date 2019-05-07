@@ -23,6 +23,7 @@
       - logrotate
       - git
       - unzip
+      - fail2ban
   become: yes
   become_user: root
 

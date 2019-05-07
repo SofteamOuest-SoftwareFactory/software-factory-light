@@ -4,6 +4,7 @@
   user:
     name: jenkins
     password: "{{jenkins.password | password_hash('sha512', 'mysecretsalt') }}"
+    generate_ssh_key: true
   become: yes
   become_user: root
 

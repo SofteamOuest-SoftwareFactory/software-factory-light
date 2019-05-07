@@ -1,6 +1,7 @@
 ---
 
-- firewalld:
+- name: Enable HTTPS
+  firewalld:
     service: https
     permanent: yes
     state: enabled
@@ -9,11 +10,43 @@
   become: yes
   become_user: root
 
-- firewalld:
-    service: http
+- name: Enable 2212
+  firewalld:
+    port: 2212/tcp
     permanent: yes
     state: enabled
     immediate: yes
     zone: public
   become: yes
   become_user: root
+  
+- name: Disable HTTPS
+  firewalld:
+    service: http
+    permanent: yes
+    state: disabled
+    immediate: yes
+    zone: public
+  become: yes
+  become_user: root
+
+- name: Disable dhcpv6-client
+  firewalld:
+    service: dhcpv6-client
+    permanent: yes
+    state: disabled
+    immediate: yes
+    zone: public
+  become: yes
+  become_user: root
+
+- name: Disable ssh
+  firewalld:
+    service: ssh
+    permanent: yes
+    state: disabled
+    immediate: yes
+    zone: public
+  become: yes
+  become_user: root
+

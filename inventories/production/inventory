@@ -11,7 +11,7 @@ usine-nexus.softeam.fr
 usine-sonarqube.softeam.fr
 
 [targets]
-usine-jenkins.softeam.fr ansible_user=ansible
-51.77.24.101 ansible_user=ansible
-usine-nexus.softeam.fr ansible_user=ansible
-usine-sonarqube.softeam.fr ansible_user=ansible
+usine-jenkins.softeam.fr ansible_user=ansible ansible_port=2212
+51.77.24.101 ansible_user=ansible ansible_port=2212
+usine-nexus.softeam.fr ansible_user=ansible ansible_port=2212
+usine-sonarqube.softeam.fr ansible_user=ansible ansible_port=2212
