@@ -9,6 +9,14 @@
   become: yes
   become_user: root
 
+- name: Generate Sudoer Conf
+  template:
+    src: sudoer
+    dest: /etc/sudoers.d/nexus
+    mode: 0744
+  become: yes
+  become_user: root
+
 - name: "Status file /home/nexus/{{nexusapp.version}}-unix.tar.gz"
   stat:
     path:  "/home/nexus/{{nexusapp.version}}-unix.tar.gz"

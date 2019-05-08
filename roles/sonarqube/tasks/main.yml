@@ -7,6 +7,14 @@
   become: yes
   become_user: root
 
+- name: Generate Sudoer Conf
+  template:
+    src: sudoer
+    dest: /etc/sudoers.d/sonar
+    mode: 0744
+  become: yes
+  become_user: root
+
 - name: "Status file /home/sonar/{{sonarapp.version}}.zip"
   stat:
     path:  "/home/sonar/{{sonarapp.version}}.zip"
