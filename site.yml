@@ -4,6 +4,7 @@
   roles:
     - { role: common,           tags: [common] }
     - { role: ansible-user,     tags: [common] }
+    - { role: firewalld-sshd,   tags: [common] }
 
 - hosts: jenkins-master
   roles:
