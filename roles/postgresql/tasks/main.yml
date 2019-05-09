@@ -15,14 +15,16 @@
   become: yes
   become_user: root
 
-- find:
+- name: Check if folder data is empty
+  find:
     paths: /var/lib/pgsql/9.6/data/
     patterns: "*.conf"
   register: dir_files
   become: yes
   become_user: root
 
-- command: /usr/pgsql-9.6/bin/postgresql96-setup initdb
+- name: Initdb if folder data is empty
+  command: /usr/pgsql-9.6/bin/postgresql96-setup initdb
   when: dir_files.matched|int == 0
   become: yes
   become_user: root
