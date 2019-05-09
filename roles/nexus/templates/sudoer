@@ -1,1 +1,1 @@
-nexus ALL=NOPASSWD: /usr/bin/systemctl restart nexus.service
+nexus ALL= NOPASSWD: /bin/systemctl restart nexus

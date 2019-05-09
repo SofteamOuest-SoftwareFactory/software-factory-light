@@ -10,8 +10,7 @@
   become: yes
   become_user: root
 
-
-- name: Disable HTTPS
+- name: Disable HTTP
   firewalld:
     service: http
     permanent: yes

@@ -19,7 +19,7 @@
   become: yes
   become_user: root
 
-- name: Create Groupe Docker
+- name: Create docker Group
   group:
     name: docker
     state: present

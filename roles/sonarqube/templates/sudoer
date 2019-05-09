@@ -1,1 +1,1 @@
-sonar ALL=NOPASSWD: /usr/bin/systemctl restart sonar.service
+sonar ALL= NOPASSWD: /bin/systemctl restart sonar
