@@ -9,3 +9,11 @@
      - docker
   become: yes
   become_user: root
+
+- name: Remove Docker Images
+  cron:
+    name: "clean_docker"
+    special_time: "daily"
+    job: "docker rm $(docker ps -a -q); docker rmi $(docker images -q)"
+  become: yes
+  become_user: root

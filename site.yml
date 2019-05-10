@@ -16,6 +16,7 @@
   roles:
     - { role: java,             tags: [jenkins] }
     - { role: docker,           tags: [jenkins] }
+    - { role: jenkins-slave,    tags: [jenkins] }
 
 - hosts: nexus
   roles:

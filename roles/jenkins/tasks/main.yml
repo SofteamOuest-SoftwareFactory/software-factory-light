@@ -50,3 +50,11 @@
   become: yes
   become_user: root
   notify: Restart nginx services
+
+- name: Generate Casc Conf
+  template:
+    src: configuration.j2
+    dest: /home/jenkins/jenkins.conf
+    mode: 0744
+  become: yes
+  become_user: jenkins
