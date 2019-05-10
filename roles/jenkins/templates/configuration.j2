@@ -49,19 +49,19 @@ credentials:
           - usernamePassword:
               description: "AMF Deploy User (Nexus)"
               id: "amf-nexus-user"
-              password: "{{amf_nexus_user}}"
+              password: "{{amf_nexus_user_password}}"
               scope: GLOBAL
               username: "amf"
           - usernamePassword:
               description: "Jenkins2 User (Gitlab)"
               id: "jenkins2-gitlab-user"
-              password: "{{jenkins2_gitlab_user}}"
+              password: "{{jenkins2_gitlab_user_password}}"
               scope: GLOBAL
               username: "jenkins2"
           - usernamePassword:
               description: "Jenkins User (Slave VM)"
               id: "jenkins-ssh"
-              password: "{{jenkins_ssh}}"
+              password: "{{jenkins_ssh_password}}"
               scope: GLOBAL
               username: "jenkins"
 
@@ -74,18 +74,27 @@ unclassified:
     defaultBody: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:\r\n\r\nCheck\
       \ console output at $BUILD_URL to view the results."
     defaultContentType: "text/plain"
-    defaultRecipients: "{{ jenkins_admin }}"
-    defaultReplyTo: "{{ jenkins_admin }}"
+    defaultRecipients: "{{ jenkins_admin_email }}"
+    defaultReplyTo: "{{ jenkins_admin_email }}"
     defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
     maxAttachmentSize: -1
     maxAttachmentSizeMb: 0
     precedenceBulk: false
     useSsl: false
     watchingEnabled: false
+  globalConfigFiles:
+    configs:
+    - custom:
+        content: "{\n  \"http-basic\": {\n    \"usine-nexus.softeam.fr\": {\n    \
+          \  \"username\": \"amf\",\n      \"password\": \"{{amf_nexus_user_password}}\"\n    }\n  }\n\
+          }"
+        id: "amf-auth.json"
+        name: "amf-auth.json"
+        providerId: "org.jenkinsci.plugins.configfiles.custom.CustomConfig"
   location:
-    adminAddress: "{{ jenkins_admin }}"
+    adminAddress: "{{ jenkins_admin_email }}"
     url: "https://jenkins-master.usine.fr/"
   mailer:
-    adminAddress: "{{ jenkins_admin }}"
+    adminAddress: "{{ jenkins_admin_email }}"
     charset: "UTF-8"
     useSsl: false
